@@ -183,12 +183,12 @@ body {
 
 .map-grid {
   display: grid;
-  grid-template-columns: repeat(7, minmax(90px, 1fr));
+  grid-template-columns: repeat(7, minmax(120px, 1fr));
   gap: 10px;
 }
 
 .map-board {
-  padding: 14px;
+  padding: 18px;
   border-radius: 12px;
   border: 1px solid var(--border);
   background: radial-gradient(circle at top, #1a241b, #10140f 65%);
@@ -241,7 +241,7 @@ body {
   border: 1px solid var(--border);
   cursor: pointer;
   position: relative;
-  min-height: 70px;
+  min-height: 90px;
   display: grid;
   align-content: center;
 }
@@ -313,6 +313,10 @@ body {
   border: 1px solid var(--border);
   background: #1a2018;
   cursor: pointer;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: center;
 }
 
 .division-list li.selected {
@@ -330,6 +334,45 @@ body {
 .selection strong {
   font-size: 16px;
   color: var(--accent-strong);
+}
+
+.division-portrait {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #111610;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  color: var(--accent-strong);
+}
+
+.division-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: #121812;
+  border: 1px solid var(--border);
+  font-size: 18px;
+}
+
+.division-icon.infantry {
+  color: #cbd6c6;
+}
+
+.division-icon.armor {
+  color: #d7c89a;
+}
+
+.division-icon.mountain {
+  color: #b9cfe6;
+}
+
+.division-text {
+  line-height: 1.4;
 }
 
 .decisions {

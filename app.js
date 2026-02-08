@@ -11,9 +11,9 @@ const state = {
   completedFocuses: new Set(),
   selectedDivisionId: null,
   divisions: {
-    'north-1': { name: '第1歩兵師団', zone: 'north' },
-    'capital-1': { name: '第2装甲師団', zone: 'capital' },
-    'west-1': { name: '第3山岳師団', zone: 'west' },
+    'north-1': { name: '第1歩兵師団', zone: 'north', type: 'infantry' },
+    'capital-1': { name: '第2装甲師団', zone: 'capital', type: 'armor' },
+    'west-1': { name: '第3山岳師団', zone: 'west', type: 'mountain' },
   },
 };
 
@@ -131,6 +131,7 @@ const elements = {
   divisionList: document.getElementById('division-list'),
   selectedDivision: document.getElementById('selected-division'),
   selectionHint: document.getElementById('selection-hint'),
+  divisionPortrait: document.getElementById('division-portrait'),
   mapTiles: document.querySelectorAll('.tile'),
 };
 
@@ -142,6 +143,15 @@ const formatDate = (date) => {
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}/${month}/${day}`;
 };
+
+const divisionIcons = {
+  infantry: { icon: '🪖', label: '歩兵' },
+  armor: { icon: '🛡️', label: '装甲' },
+  mountain: { icon: '🏔️', label: '山岳' },
+};
+
+const getDivisionIcon = (type) =>
+  divisionIcons[type] ?? { icon: '⚑', label: '師団' };
 
 const isFocusCompleted = (focusKey) =>
   state.completedFocuses.has(focusKey);
@@ -203,6 +213,17 @@ const render = () => {
   const selectedDivision = state.selectedDivisionId
     ? state.divisions[state.selectedDivisionId]
     : null;
+  if (selectedDivision) {
+    const { icon, label } = getDivisionIcon(selectedDivision.type);
+    elements.divisionPortrait.textContent = icon;
+    elements.divisionPortrait.setAttribute(
+      'aria-label',
+      `${label}師団のアイコン`,
+    );
+  } else {
+    elements.divisionPortrait.textContent = '？';
+    elements.divisionPortrait.removeAttribute('aria-label');
+  }
   elements.selectedDivision.textContent = selectedDivision
     ? selectedDivision.name
     : 'なし';
@@ -222,7 +243,15 @@ const render = () => {
     .forEach((item) => {
       const division = state.divisions[item.dataset.division];
       if (!division) return;
-      item.textContent = `${division.name} — ${zoneLabel(division.zone)}`;
+      const { icon, label } = getDivisionIcon(division.type);
+      item.innerHTML = `
+        <span class="division-icon ${division.type}" aria-hidden="true">
+          ${icon}
+        </span>
+        <span class="division-text">
+          ${division.name}（${label}）— ${zoneLabel(division.zone)}
+        </span>
+      `;
     });
 };
 
