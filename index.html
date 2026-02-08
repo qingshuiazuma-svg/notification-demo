@@ -78,16 +78,24 @@
       <section class="panel">
         <h2>戦況マップ</h2>
         <p class="muted">師団を選択して移動先をクリック。</p>
-        <div class="map">
-          <div class="map-row">
-            <div class="tile friendly" data-zone="north">北部戦線</div>
-            <div class="tile contested" data-zone="central">中部戦線</div>
-            <div class="tile hostile" data-zone="south">南部戦線</div>
+        <div class="map-board">
+          <div class="map">
+            <div class="map-row">
+              <div class="tile friendly" data-zone="north">北部戦線</div>
+              <div class="tile contested" data-zone="central">中部戦線</div>
+              <div class="tile hostile" data-zone="south">南部戦線</div>
+            </div>
+            <div class="map-row">
+              <div class="tile neutral" data-zone="mountain">山岳地帯</div>
+              <div class="tile friendly" data-zone="capital">首都圏</div>
+              <div class="tile contested" data-zone="strait">海峡</div>
+            </div>
           </div>
-          <div class="map-row">
-            <div class="tile neutral" data-zone="mountain">山岳地帯</div>
-            <div class="tile friendly" data-zone="capital">首都圏</div>
-            <div class="tile contested" data-zone="strait">海峡</div>
+          <div class="map-legend">
+            <span><i class="legend-dot friendly"></i>友軍</span>
+            <span><i class="legend-dot contested"></i>交戦中</span>
+            <span><i class="legend-dot hostile"></i>敵軍</span>
+            <span><i class="legend-dot neutral"></i>中立</span>
           </div>
         </div>
         <div class="division-panel">
