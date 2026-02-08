@@ -13,7 +13,7 @@ const state = {
   divisions: {
     'north-1': { name: '第1歩兵師団', zone: 'north', type: 'infantry' },
     'capital-1': { name: '第2装甲師団', zone: 'capital', type: 'armor' },
-    'west-1': { name: '第3山岳師団', zone: 'west', type: 'mountain' },
+    'west-1': { name: '第3山岳師団', zone: 'highlands', type: 'mountain' },
   },
 };
 
@@ -145,13 +145,44 @@ const formatDate = (date) => {
 };
 
 const divisionIcons = {
-  infantry: { icon: '🪖', label: '歩兵' },
-  armor: { icon: '🛡️', label: '装甲' },
-  mountain: { icon: '🏔️', label: '山岳' },
+  infantry: {
+    label: '歩兵',
+    svg: `
+      <svg viewBox="0 0 64 64" role="img" aria-label="歩兵">
+        <rect x="10" y="28" width="44" height="18" rx="6" fill="#4b5a4d"/>
+        <rect x="18" y="20" width="28" height="12" rx="6" fill="#667a68"/>
+        <circle cx="22" cy="49" r="5" fill="#2d3a2f"/>
+        <circle cx="42" cy="49" r="5" fill="#2d3a2f"/>
+      </svg>
+    `,
+  },
+  armor: {
+    label: '装甲',
+    svg: `
+      <svg viewBox="0 0 64 64" role="img" aria-label="装甲">
+        <rect x="8" y="30" width="48" height="16" rx="4" fill="#7b6b4e"/>
+        <rect x="18" y="24" width="20" height="10" rx="3" fill="#9b8a66"/>
+        <rect x="38" y="26" width="14" height="4" rx="2" fill="#c8b07a"/>
+        <circle cx="18" cy="50" r="5" fill="#2f2a1f"/>
+        <circle cx="32" cy="50" r="5" fill="#2f2a1f"/>
+        <circle cx="46" cy="50" r="5" fill="#2f2a1f"/>
+      </svg>
+    `,
+  },
+  mountain: {
+    label: '山岳',
+    svg: `
+      <svg viewBox="0 0 64 64" role="img" aria-label="山岳">
+        <path d="M10 52L28 18l12 20 6-8 12 22H10z" fill="#5e6e8c"/>
+        <path d="M26 26l6 10 6-10 6 10H20l6-10z" fill="#9fb3c9"/>
+        <rect x="12" y="52" width="40" height="6" rx="3" fill="#2c2f3a"/>
+      </svg>
+    `,
+  },
 };
 
 const getDivisionIcon = (type) =>
-  divisionIcons[type] ?? { icon: '⚑', label: '師団' };
+  divisionIcons[type] ?? { svg: '<span>⚑</span>', label: '師団' };
 
 const isFocusCompleted = (focusKey) =>
   state.completedFocuses.has(focusKey);
@@ -214,8 +245,8 @@ const render = () => {
     ? state.divisions[state.selectedDivisionId]
     : null;
   if (selectedDivision) {
-    const { icon, label } = getDivisionIcon(selectedDivision.type);
-    elements.divisionPortrait.textContent = icon;
+    const { svg, label } = getDivisionIcon(selectedDivision.type);
+    elements.divisionPortrait.innerHTML = svg;
     elements.divisionPortrait.setAttribute(
       'aria-label',
       `${label}師団のアイコン`,
@@ -243,13 +274,13 @@ const render = () => {
     .forEach((item) => {
       const division = state.divisions[item.dataset.division];
       if (!division) return;
-      const { icon, label } = getDivisionIcon(division.type);
+      const { svg } = getDivisionIcon(division.type);
       item.innerHTML = `
         <span class="division-icon ${division.type}" aria-hidden="true">
-          ${icon}
+          ${svg}
         </span>
         <span class="division-text">
-          ${division.name}（${label}）— ${zoneLabel(division.zone)}
+          ${division.name} — ${zoneLabel(division.zone)}
         </span>
       `;
     });
@@ -267,20 +298,32 @@ const addLog = (message) => {
 
 const zoneLabel = (zone) => {
   const labels = {
+    northwest: '北西平原',
     north: '北方平原',
     'coast-north': '北沿岸',
     capital: '中央州',
     industry: '工業地帯',
     frontline: '前線',
     east: '東部戦線',
+    northeast: '北東境界',
     west: '西部戦線',
+    heartland: '内陸州',
     mountain: '山岳地帯',
+    highlands: '高地',
     river: '大河川',
+    'east-south': '東部南方',
     south: '南方戦線',
     'south-coast': '南沿岸',
     desert: '荒野',
     supply: '補給線',
     'deep-south': '南部奥地',
+    'south-peninsula': '南半島',
+    'west-coast': '西沿岸',
+    islands: '列島',
+    'sea-lanes': '海上輸送路',
+    frontier: '辺境',
+    'deep-east': '東部奥地',
+    'far-south': '最南端',
   };
   return labels[zone] ?? '不明';
 };

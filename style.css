@@ -183,7 +183,7 @@ body {
 
 .map-grid {
   display: grid;
-  grid-template-columns: repeat(7, minmax(120px, 1fr));
+  grid-template-columns: repeat(9, minmax(80px, 1fr));
   gap: 10px;
 }
 
@@ -348,6 +348,11 @@ body {
   color: var(--accent-strong);
 }
 
+.division-portrait svg {
+  width: 42px;
+  height: 42px;
+}
+
 .division-icon {
   width: 36px;
   height: 36px;
@@ -357,6 +362,11 @@ body {
   background: #121812;
   border: 1px solid var(--border);
   font-size: 18px;
+}
+
+.division-icon svg {
+  width: 24px;
+  height: 24px;
 }
 
 .division-icon.infantry {
