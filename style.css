@@ -181,8 +181,9 @@ body {
   transform: none;
 }
 
-.map {
+.map-grid {
   display: grid;
+  grid-template-columns: repeat(7, minmax(90px, 1fr));
   gap: 10px;
 }
 
@@ -228,10 +229,8 @@ body {
   background: #353a4a;
 }
 
-.map-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+.legend-dot.water {
+  background: #1b2a3f;
 }
 
 .tile {
@@ -245,6 +244,13 @@ body {
   min-height: 70px;
   display: grid;
   align-content: center;
+}
+
+.tile.water {
+  background: linear-gradient(135deg, #142234, #1c3048);
+  color: #8fb6e3;
+  border-color: #1b2b3f;
+  cursor: not-allowed;
 }
 
 .tile.selected {

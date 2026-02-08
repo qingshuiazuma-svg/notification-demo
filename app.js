@@ -13,7 +13,7 @@ const state = {
   divisions: {
     'north-1': { name: '第1歩兵師団', zone: 'north' },
     'capital-1': { name: '第2装甲師団', zone: 'capital' },
-    'mountain-1': { name: '第3山岳師団', zone: 'mountain' },
+    'west-1': { name: '第3山岳師団', zone: 'west' },
   },
 };
 
@@ -238,12 +238,20 @@ const addLog = (message) => {
 
 const zoneLabel = (zone) => {
   const labels = {
-    north: '北部戦線',
-    central: '中部戦線',
-    south: '南部戦線',
+    north: '北方平原',
+    'coast-north': '北沿岸',
+    capital: '中央州',
+    industry: '工業地帯',
+    frontline: '前線',
+    east: '東部戦線',
+    west: '西部戦線',
     mountain: '山岳地帯',
-    capital: '首都圏',
-    strait: '海峡',
+    river: '大河川',
+    south: '南方戦線',
+    'south-coast': '南沿岸',
+    desert: '荒野',
+    supply: '補給線',
+    'deep-south': '南部奥地',
   };
   return labels[zone] ?? '不明';
 };
@@ -336,6 +344,10 @@ const handleDivisionSelect = (event) => {
 const handleMapClick = (event) => {
   const tile = event.target.closest('.tile');
   if (!tile) return;
+  if (tile.classList.contains('water')) {
+    addLog('海域には移動できない。');
+    return;
+  }
   if (!state.selectedDivisionId) {
     addLog('移動する師団を先に選択してください。');
     return;
@@ -359,4 +371,4 @@ document.querySelector('.orders').addEventListener('click', handleOrder);
 document.querySelector('.decisions').addEventListener('click', handleDecision);
 elements.cancelFocus.addEventListener('click', cancelFocus);
 elements.divisionList.addEventListener('click', handleDivisionSelect);
-document.querySelector('.map').addEventListener('click', handleMapClick);
+document.querySelector('.map-grid').addEventListener('click', handleMapClick);

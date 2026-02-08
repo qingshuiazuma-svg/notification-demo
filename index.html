@@ -79,23 +79,53 @@
         <h2>戦況マップ</h2>
         <p class="muted">師団を選択して移動先をクリック。</p>
         <div class="map-board">
-          <div class="map">
-            <div class="map-row">
-              <div class="tile friendly" data-zone="north">北部戦線</div>
-              <div class="tile contested" data-zone="central">中部戦線</div>
-              <div class="tile hostile" data-zone="south">南部戦線</div>
-            </div>
-            <div class="map-row">
-              <div class="tile neutral" data-zone="mountain">山岳地帯</div>
-              <div class="tile friendly" data-zone="capital">首都圏</div>
-              <div class="tile contested" data-zone="strait">海峡</div>
-            </div>
+          <div class="map-grid">
+            <div class="tile water">外洋</div>
+            <div class="tile water">外洋</div>
+            <div class="tile friendly" data-zone="north">北方平原</div>
+            <div class="tile contested" data-zone="coast-north">北沿岸</div>
+            <div class="tile water">外洋</div>
+            <div class="tile water">外洋</div>
+            <div class="tile water">外洋</div>
+
+            <div class="tile water">外洋</div>
+            <div class="tile friendly" data-zone="capital">中央州</div>
+            <div class="tile friendly" data-zone="industry">工業地帯</div>
+            <div class="tile contested" data-zone="frontline">前線</div>
+            <div class="tile hostile" data-zone="east">東部戦線</div>
+            <div class="tile water">外洋</div>
+            <div class="tile water">外洋</div>
+
+            <div class="tile water">外洋</div>
+            <div class="tile friendly" data-zone="west">西部戦線</div>
+            <div class="tile neutral" data-zone="mountain">山岳地帯</div>
+            <div class="tile contested" data-zone="river">大河川</div>
+            <div class="tile hostile" data-zone="south">南方戦線</div>
+            <div class="tile hostile" data-zone="south-coast">南沿岸</div>
+            <div class="tile water">外洋</div>
+
+            <div class="tile water">外洋</div>
+            <div class="tile water">外洋</div>
+            <div class="tile neutral" data-zone="desert">荒野</div>
+            <div class="tile neutral" data-zone="supply">補給線</div>
+            <div class="tile hostile" data-zone="deep-south">南部奥地</div>
+            <div class="tile water">外洋</div>
+            <div class="tile water">外洋</div>
+
+            <div class="tile water">外洋</div>
+            <div class="tile water">外洋</div>
+            <div class="tile water">外洋</div>
+            <div class="tile water">外洋</div>
+            <div class="tile water">外洋</div>
+            <div class="tile water">外洋</div>
+            <div class="tile water">外洋</div>
           </div>
           <div class="map-legend">
             <span><i class="legend-dot friendly"></i>友軍</span>
             <span><i class="legend-dot contested"></i>交戦中</span>
             <span><i class="legend-dot hostile"></i>敵軍</span>
             <span><i class="legend-dot neutral"></i>中立</span>
+            <span><i class="legend-dot water"></i>海域</span>
           </div>
         </div>
         <div class="division-panel">
