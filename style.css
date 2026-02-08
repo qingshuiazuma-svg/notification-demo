@@ -23,6 +23,24 @@ body {
   flex-direction: column;
 }
 
+.icon-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
 .topbar {
   display: flex;
   justify-content: space-between;
@@ -204,6 +222,12 @@ body {
   color: var(--muted);
 }
 
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .legend-dot {
   display: inline-block;
   width: 10px;
@@ -244,6 +268,12 @@ body {
   min-height: 90px;
   display: grid;
   align-content: center;
+}
+
+.tile-icon {
+  width: 42px;
+  height: 42px;
+  margin: 0 auto;
 }
 
 .tile.water {
