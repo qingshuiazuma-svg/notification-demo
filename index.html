@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ironfront 1936 - ミニ戦略デモ</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="subtitle">国家戦略シミュレーション</p>
+        <h1>Ironfront 1936</h1>
+      </div>
+      <div class="flag">⚑</div>
+    </header>
+
+    <main class="layout">
+      <section class="panel">
+        <h2>国家概要</h2>
+        <div class="stats">
+          <div class="stat">
+            <span>政治力</span>
+            <strong id="political-power">120</strong>
+          </div>
+          <div class="stat">
+            <span>安定度</span>
+            <strong id="stability">62%</strong>
+          </div>
+          <div class="stat">
+            <span>戦争協力度</span>
+            <strong id="war-support">41%</strong>
+          </div>
+          <div class="stat">
+            <span>民需工場</span>
+            <strong id="civilian-factories">18</strong>
+          </div>
+          <div class="stat">
+            <span>軍需工場</span>
+            <strong id="military-factories">8</strong>
+          </div>
+          <div class="stat">
+            <span>徴兵可能人口</span>
+            <strong id="manpower">520K</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>NF(国家方針)ツリー</h2>
+        <p class="muted">
+          前提条件を満たすと解禁。進行中は1つだけ。
+        </p>
+        <div class="focus-status">
+          <div>
+            <span>進行中</span>
+            <strong id="current-focus">未設定</strong>
+          </div>
+          <div>
+            <span>完了</span>
+            <strong id="focus-completed">0/6</strong>
+          </div>
+          <div class="progress">
+            <div id="focus-progress" class="progress-bar" style="width: 0%"></div>
+          </div>
+          <button id="cancel-focus" class="ghost">中止</button>
+        </div>
+        <div class="focus-grid" id="focus-grid">
+          <button class="focus" data-focus="industry">工業優先 (35日)</button>
+          <button class="focus" data-focus="military">軍備拡張 (35日)</button>
+          <button class="focus" data-focus="diplomacy">外交攻勢 (28日)</button>
+          <button class="focus" data-focus="research">研究促進 (21日)</button>
+          <button class="focus" data-focus="stability">治安強化 (21日)</button>
+          <button class="focus" data-focus="mobilization">動員準備 (28日)</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>戦況マップ</h2>
+        <p class="muted">師団を選択して移動先をクリック。</p>
+        <div class="map">
+          <div class="map-row">
+            <div class="tile friendly" data-zone="north">北部戦線</div>
+            <div class="tile contested" data-zone="central">中部戦線</div>
+            <div class="tile hostile" data-zone="south">南部戦線</div>
+          </div>
+          <div class="map-row">
+            <div class="tile neutral" data-zone="mountain">山岳地帯</div>
+            <div class="tile friendly" data-zone="capital">首都圏</div>
+            <div class="tile contested" data-zone="strait">海峡</div>
+          </div>
+        </div>
+        <div class="division-panel">
+          <div>
+            <h3>師団</h3>
+            <ul id="division-list" class="division-list">
+              <li data-division="north-1">第1歩兵師団 — 北部戦線</li>
+              <li data-division="capital-1">第2装甲師団 — 首都圏</li>
+              <li data-division="mountain-1">第3山岳師団 — 山岳地帯</li>
+            </ul>
+          </div>
+          <div class="selection">
+            <span>選択中</span>
+            <strong id="selected-division">なし</strong>
+            <p id="selection-hint">師団を選択してください。</p>
+          </div>
+        </div>
+        <div class="orders">
+          <button class="order" data-order="plan">作戦計画</button>
+          <button class="order" data-order="fortify">防衛線強化</button>
+          <button class="order" data-order="air">航空優勢</button>
+          <button class="order" data-order="navy">海軍演習</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>政策決定</h2>
+        <p class="muted">政治力を消費して即時効果を得る。</p>
+        <div class="decisions">
+          <button class="decision" data-decision="propaganda">
+            宣伝強化 <span>35 PP</span>
+          </button>
+          <button class="decision" data-decision="exports">
+            貿易促進 <span>25 PP</span>
+          </button>
+          <button class="decision" data-decision="training">
+            陸軍訓練 <span>20 PP</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>戦略ログ</h2>
+        <ul id="log" class="log">
+          <li>1936年1月: 政治力を温存しつつ計画を策定中。</li>
+          <li>徴兵年齢の見直し案が提出された。</li>
+        </ul>
+      </section>
+
+      <section class="panel">
+        <h2>プレイ方法</h2>
+        <ol class="instructions">
+          <li>NF(国家方針)を選んで完了を目指す。</li>
+          <li>「日付を進める」で週次進行し、方針が進む。</li>
+          <li>師団を選択してマップをクリックし移動命令。</li>
+          <li>政策決定や作戦命令で追加効果を得る。</li>
+        </ol>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>
+        <span>日付</span>
+        <strong id="date">1936/01/12</strong>
+      </div>
+      <button id="advance" class="advance">日付を進める</button>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
