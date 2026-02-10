@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ironfront 1936 - ミニ戦略デモ</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="subtitle">国家戦略シミュレーション</p>
+        <h1>Ironfront 1936</h1>
+      </div>
+      <div class="flag">⚑</div>
+    </header>
+    <svg class="icon-sprite" aria-hidden="true">
+      <symbol id="icon-plains" viewBox="0 0 64 64">
+        <path d="M6 44c10-10 18-10 28 0 6-6 14-6 24 0v10H6z" fill="#4b6b4c" />
+        <path d="M10 36c6-6 12-6 18 0 4-4 10-4 16 0" fill="none" stroke="#7fa17b" stroke-width="4" stroke-linecap="round" />
+      </symbol>
+      <symbol id="icon-coast" viewBox="0 0 64 64">
+        <rect x="6" y="18" width="52" height="28" rx="8" fill="#2c4a62" />
+        <path d="M12 26c6 6 14 6 20 0 6 6 14 6 20 0" fill="none" stroke="#9bc7e8" stroke-width="4" stroke-linecap="round" />
+      </symbol>
+      <symbol id="icon-city" viewBox="0 0 64 64">
+        <rect x="10" y="22" width="18" height="26" rx="2" fill="#7b8a94" />
+        <rect x="30" y="16" width="24" height="32" rx="2" fill="#56606a" />
+        <rect x="14" y="28" width="6" height="6" fill="#c9d3dc" />
+        <rect x="36" y="24" width="8" height="8" fill="#c9d3dc" />
+      </symbol>
+      <symbol id="icon-industry" viewBox="0 0 64 64">
+        <rect x="10" y="28" width="44" height="22" rx="2" fill="#7d6d4e" />
+        <rect x="18" y="20" width="14" height="10" fill="#9b8a66" />
+        <rect x="36" y="16" width="10" height="12" fill="#bca16f" />
+        <path d="M18 18c0-6 8-6 8 0" stroke="#d9c9a2" stroke-width="3" fill="none" />
+      </symbol>
+      <symbol id="icon-frontline" viewBox="0 0 64 64">
+        <path d="M16 18l32 28" stroke="#d9b26d" stroke-width="6" stroke-linecap="round" />
+        <path d="M48 18L16 46" stroke="#d97c6d" stroke-width="6" stroke-linecap="round" />
+      </symbol>
+      <symbol id="icon-mountain" viewBox="0 0 64 64">
+        <path d="M10 50L28 16l12 20 6-8 12 22H10z" fill="#5e6e8c" />
+        <path d="M26 26l6 10 6-10 6 10H20l6-10z" fill="#9fb3c9" />
+      </symbol>
+      <symbol id="icon-river" viewBox="0 0 64 64">
+        <path d="M12 16c8 6 8 14 0 20s-8 14 0 20" fill="none" stroke="#7fb2d6" stroke-width="6" stroke-linecap="round" />
+        <path d="M34 14c8 6 8 14 0 20s-8 14 0 20" fill="none" stroke="#9dd1f0" stroke-width="6" stroke-linecap="round" />
+      </symbol>
+      <symbol id="icon-desert" viewBox="0 0 64 64">
+        <circle cx="44" cy="18" r="6" fill="#f2d28a" />
+        <path d="M10 44c8-6 16-6 24 0 8-6 16-6 20 0v8H10z" fill="#c9a865" />
+      </symbol>
+      <symbol id="icon-supply" viewBox="0 0 64 64">
+        <rect x="14" y="24" width="36" height="26" rx="4" fill="#6d7b5e" />
+        <path d="M14 32h36" stroke="#9eb08a" stroke-width="4" />
+        <path d="M26 24v-6h12v6" stroke="#9eb08a" stroke-width="4" stroke-linecap="round" />
+      </symbol>
+      <symbol id="icon-islands" viewBox="0 0 64 64">
+        <path d="M14 44c6-6 14-6 20 0 4-4 10-4 16 0v8H14z" fill="#5c7a5d" />
+        <path d="M18 34c4-4 8-4 12 0" stroke="#9bc7e8" stroke-width="4" stroke-linecap="round" />
+      </symbol>
+      <symbol id="icon-sea" viewBox="0 0 64 64">
+        <path d="M8 24c6 6 14 6 20 0 6 6 14 6 20 0" fill="none" stroke="#9bc7e8" stroke-width="4" stroke-linecap="round" />
+        <path d="M8 38c6 6 14 6 20 0 6 6 14 6 20 0" fill="none" stroke="#7fb2d6" stroke-width="4" stroke-linecap="round" />
+      </symbol>
+      <symbol id="icon-frontier" viewBox="0 0 64 64">
+        <rect x="16" y="20" width="32" height="24" rx="4" fill="#6b5c4a" />
+        <path d="M20 28h24" stroke="#a78c6c" stroke-width="4" />
+        <path d="M20 36h16" stroke="#a78c6c" stroke-width="4" />
+      </symbol>
+    </svg>
+
+    <main class="layout">
+      <section class="panel">
+        <h2>国家概要</h2>
+        <div class="stats">
+          <div class="stat">
+            <span>政治力</span>
+            <strong id="political-power">120</strong>
+          </div>
+          <div class="stat">
+            <span>安定度</span>
+            <strong id="stability">62%</strong>
+          </div>
+          <div class="stat">
+            <span>戦争協力度</span>
+            <strong id="war-support">41%</strong>
+          </div>
+          <div class="stat">
+            <span>民需工場</span>
+            <strong id="civilian-factories">18</strong>
+          </div>
+          <div class="stat">
+            <span>軍需工場</span>
+            <strong id="military-factories">8</strong>
+          </div>
+          <div class="stat">
+            <span>徴兵可能人口</span>
+            <strong id="manpower">520K</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>NF(国家方針)ツリー</h2>
+        <p class="muted">
+          前提条件を満たすと解禁。進行中は1つだけ。
+        </p>
+        <div class="focus-status">
+          <div>
+            <span>進行中</span>
+            <strong id="current-focus">未設定</strong>
+          </div>
+          <div>
+            <span>完了</span>
+            <strong id="focus-completed">0/6</strong>
+          </div>
+          <div class="progress">
+            <div id="focus-progress" class="progress-bar" style="width: 0%"></div>
+          </div>
+          <button id="cancel-focus" class="ghost">中止</button>
+        </div>
+        <div class="focus-grid" id="focus-grid">
+          <button class="focus" data-focus="industry">工業優先 (35日)</button>
+          <button class="focus" data-focus="military">軍備拡張 (35日)</button>
+          <button class="focus" data-focus="diplomacy">外交攻勢 (28日)</button>
+          <button class="focus" data-focus="research">研究促進 (21日)</button>
+          <button class="focus" data-focus="stability">治安強化 (21日)</button>
+          <button class="focus" data-focus="mobilization">動員準備 (28日)</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>戦況マップ</h2>
+        <p class="muted">師団を選択して移動先をクリック。</p>
+        <div class="map-board">
+          <div class="map-grid">
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile friendly" data-zone="northwest" aria-label="北西平原">
+              <svg class="tile-icon"><use href="#icon-plains"></use></svg>
+            </div>
+            <div class="tile friendly" data-zone="north" aria-label="北方平原">
+              <svg class="tile-icon"><use href="#icon-plains"></use></svg>
+            </div>
+            <div class="tile contested" data-zone="coast-north" aria-label="北沿岸">
+              <svg class="tile-icon"><use href="#icon-coast"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile friendly" data-zone="capital" aria-label="中央州">
+              <svg class="tile-icon"><use href="#icon-city"></use></svg>
+            </div>
+            <div class="tile friendly" data-zone="industry" aria-label="工業地帯">
+              <svg class="tile-icon"><use href="#icon-industry"></use></svg>
+            </div>
+            <div class="tile contested" data-zone="frontline" aria-label="前線">
+              <svg class="tile-icon"><use href="#icon-frontline"></use></svg>
+            </div>
+            <div class="tile hostile" data-zone="east" aria-label="東部戦線">
+              <svg class="tile-icon"><use href="#icon-frontline"></use></svg>
+            </div>
+            <div class="tile hostile" data-zone="northeast" aria-label="北東境界">
+              <svg class="tile-icon"><use href="#icon-frontier"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile friendly" data-zone="west" aria-label="西部戦線">
+              <svg class="tile-icon"><use href="#icon-frontline"></use></svg>
+            </div>
+            <div class="tile friendly" data-zone="heartland" aria-label="内陸州">
+              <svg class="tile-icon"><use href="#icon-plains"></use></svg>
+            </div>
+            <div class="tile neutral" data-zone="mountain" aria-label="山岳地帯">
+              <svg class="tile-icon"><use href="#icon-mountain"></use></svg>
+            </div>
+            <div class="tile contested" data-zone="river" aria-label="大河川">
+              <svg class="tile-icon"><use href="#icon-river"></use></svg>
+            </div>
+            <div class="tile hostile" data-zone="east-south" aria-label="東部南方">
+              <svg class="tile-icon"><use href="#icon-frontline"></use></svg>
+            </div>
+            <div class="tile hostile" data-zone="south" aria-label="南方戦線">
+              <svg class="tile-icon"><use href="#icon-frontline"></use></svg>
+            </div>
+            <div class="tile hostile" data-zone="south-coast" aria-label="南沿岸">
+              <svg class="tile-icon"><use href="#icon-coast"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile friendly" data-zone="west-coast" aria-label="西沿岸">
+              <svg class="tile-icon"><use href="#icon-coast"></use></svg>
+            </div>
+            <div class="tile neutral" data-zone="highlands" aria-label="高地">
+              <svg class="tile-icon"><use href="#icon-mountain"></use></svg>
+            </div>
+            <div class="tile neutral" data-zone="desert" aria-label="荒野">
+              <svg class="tile-icon"><use href="#icon-desert"></use></svg>
+            </div>
+            <div class="tile neutral" data-zone="supply" aria-label="補給線">
+              <svg class="tile-icon"><use href="#icon-supply"></use></svg>
+            </div>
+            <div class="tile hostile" data-zone="deep-south" aria-label="南部奥地">
+              <svg class="tile-icon"><use href="#icon-frontier"></use></svg>
+            </div>
+            <div class="tile hostile" data-zone="south-peninsula" aria-label="南半島">
+              <svg class="tile-icon"><use href="#icon-coast"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile neutral" data-zone="islands" aria-label="列島">
+              <svg class="tile-icon"><use href="#icon-islands"></use></svg>
+            </div>
+            <div class="tile neutral" data-zone="sea-lanes" aria-label="海上輸送路">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile neutral" data-zone="frontier" aria-label="辺境">
+              <svg class="tile-icon"><use href="#icon-frontier"></use></svg>
+            </div>
+            <div class="tile hostile" data-zone="deep-east" aria-label="東部奥地">
+              <svg class="tile-icon"><use href="#icon-frontier"></use></svg>
+            </div>
+            <div class="tile hostile" data-zone="far-south" aria-label="最南端">
+              <svg class="tile-icon"><use href="#icon-frontline"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+            <div class="tile water" aria-label="外洋">
+              <svg class="tile-icon"><use href="#icon-sea"></use></svg>
+            </div>
+          </div>
+          <div class="map-legend">
+            <span class="legend-item" aria-label="友軍">
+              <i class="legend-dot friendly"></i>
+              <span class="sr-only">友軍</span>
+            </span>
+            <span class="legend-item" aria-label="交戦中">
+              <i class="legend-dot contested"></i>
+              <span class="sr-only">交戦中</span>
+            </span>
+            <span class="legend-item" aria-label="敵軍">
+              <i class="legend-dot hostile"></i>
+              <span class="sr-only">敵軍</span>
+            </span>
+            <span class="legend-item" aria-label="中立">
+              <i class="legend-dot neutral"></i>
+              <span class="sr-only">中立</span>
+            </span>
+            <span class="legend-item" aria-label="海域">
+              <i class="legend-dot water"></i>
+              <span class="sr-only">海域</span>
+            </span>
+          </div>
+        </div>
+        <div class="division-panel">
+          <div>
+            <h3>師団</h3>
+            <ul id="division-list" class="division-list">
+              <li data-division="north-1">第1歩兵師団 — 北部戦線</li>
+              <li data-division="capital-1">第2装甲師団 — 首都圏</li>
+              <li data-division="mountain-1">第3山岳師団 — 山岳地帯</li>
+            </ul>
+          </div>
+          <div class="selection">
+            <span>選択中</span>
+            <div id="division-portrait" class="division-portrait" aria-hidden="true">
+              ？
+            </div>
+            <strong id="selected-division">なし</strong>
+            <p id="selection-hint">師団を選択してください。</p>
+          </div>
+        </div>
+        <div class="orders">
+          <button class="order" data-order="plan">作戦計画</button>
+          <button class="order" data-order="fortify">防衛線強化</button>
+          <button class="order" data-order="air">航空優勢</button>
+          <button class="order" data-order="navy">海軍演習</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>政策決定</h2>
+        <p class="muted">政治力を消費して即時効果を得る。</p>
+        <div class="decisions">
+          <button class="decision" data-decision="propaganda">
+            宣伝強化 <span>35 PP</span>
+          </button>
+          <button class="decision" data-decision="exports">
+            貿易促進 <span>25 PP</span>
+          </button>
+          <button class="decision" data-decision="training">
+            陸軍訓練 <span>20 PP</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>戦略ログ</h2>
+        <ul id="log" class="log">
+          <li>1936年1月: 政治力を温存しつつ計画を策定中。</li>
+          <li>徴兵年齢の見直し案が提出された。</li>
+        </ul>
+      </section>
+
+      <section class="panel">
+        <h2>プレイ方法</h2>
+        <ol class="instructions">
+          <li>NF(国家方針)を選んで完了を目指す。</li>
+          <li>「日付を進める」で週次進行し、方針が進む。</li>
+          <li>師団を選択してマップをクリックし移動命令。</li>
+          <li>政策決定や作戦命令で追加効果を得る。</li>
+        </ol>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>
+        <span>日付</span>
+        <strong id="date">1936/01/12</strong>
+      </div>
+      <button id="advance" class="advance">日付を進める</button>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
